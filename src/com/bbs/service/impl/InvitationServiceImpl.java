@@ -6,6 +6,7 @@ import java.util.List;
 import com.bbs.dao.user.InvitationDao;
 import com.bbs.dao.user.impl.InvitationDaoImpl;
 import com.bbs.entity.Invitation;
+import com.bbs.entity.invitationAns;
 import com.bbs.service.InvitationService;
 
 public class InvitationServiceImpl implements InvitationService{
@@ -58,6 +59,11 @@ public class InvitationServiceImpl implements InvitationService{
 		}else {
 			return false;
 		}
+	}
+	@Override
+	public boolean addInvitationAns(invitationAns invitationans) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

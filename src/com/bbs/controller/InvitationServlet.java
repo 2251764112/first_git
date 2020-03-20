@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bbs.entity.Invitation;
+import com.bbs.entity.invitationAns;
 import com.bbs.service.InvitationService;
 import com.bbs.service.impl.InvitationServiceImpl;
 
@@ -56,7 +57,29 @@ public class InvitationServlet extends HttpServlet {
 					findEdit(request,response);
 				}else if("delAll".equals(op)) {
 					delAll(request,response);
+				}else if("addans".equals(op)) {
+					addInvitationAns(request,response);
 				}
+	}
+
+	private void addInvitationAns(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("spplication/json;charset=UTF-8");
+		//得到系统默认时间
+		Date date=new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String userId=request.getParameter("userId");
+		String invitationId=request.getParameter("invitationId");
+		String ansMessage=request.getParameter("ansMessage");
+		String ansId=request.getParameter("ansId");
+		invitationAns invitationans=new invitationAns(userId,invitationId,ansMessage,ansId);
+		boolean isOK=ps.addInvitationAns(invitationans);
+		PrintWriter pw=response.getWriter();
+		if(isOK) {
+			pw.write("{\"result\":\"true\"}");
+		}else {
+			pw.write("{\"result\":\"false\"}");
+		}
+		pw.flush();
 	}
 
 	private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {

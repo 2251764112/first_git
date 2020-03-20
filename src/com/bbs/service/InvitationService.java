@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bbs.entity.Invitation;
 import com.bbs.entity.Plate;
+import com.bbs.entity.invitationAns;
 
 public interface InvitationService {
 
@@ -19,5 +20,7 @@ public interface InvitationService {
 	boolean delById(String invitationId);
 
 	boolean update(Invitation invitation);
+
+	boolean addInvitationAns(invitationAns invitationans);
 
 }
