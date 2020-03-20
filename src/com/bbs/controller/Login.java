@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bbs.entity.User;
+import org.apache.commons.codec.digest.DigestUtils;
+
+import com.bbs.entity.Plate;
+import com.bbs.service.PlateService;
 import com.bbs.service.UserService;
+import com.bbs.service.impl.PlateServiceImpl;
 import com.bbs.service.impl.UserServiceImpl;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -28,10 +32,22 @@ public class Login extends HttpServlet {
 		//获得页面参数
 		String userId=req.getParameter("userId");
 		String userPsw=req.getParameter("userpsw");
+		 userPsw=DigestUtils.md5Hex(userPsw);  
 		//调用业务层验证登录的方法֤
 		boolean isOk=us.Verification(userId, userPsw);
 		//判断结果，根据结果进行页面跳转
 		if(isOk) {
+			// 获得所有的模块信息
+			PlateService ps=new PlateServiceImpl();
+			List<Plate> plist = null;
+			try {
+				plist = ps.getPlateList();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			req.getSession().setAttribute("plist", plist);
+			
 			req.getSession().setAttribute("userId", userId);
 			req.getRequestDispatcher("UserServlet?op=index").forward(req, resp);
 		}else {
